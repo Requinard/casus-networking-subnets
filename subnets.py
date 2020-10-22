@@ -1,6 +1,3 @@
-from unittest import TestCase
-
-
 class Subnet:
     """
     Holds data for a subnet.
@@ -10,6 +7,7 @@ class Subnet:
 
     def __init__(self, complete_address=None, ip_number=None, subnet_mask=None):
         if complete_address:
+            # todo: add some error handling
             # If we're handed a complete address, we first start by translating it into some numbers
             net_split = complete_address.split("/")
 
@@ -80,28 +78,10 @@ class Subnet:
         return results
 
 
-class SubnetsTests(TestCase):
-    a = Subnet("192.168.1.0/24")
-    b = Subnet("192.168.1.16/29")
+if __name__ == '__main__':
+    a = Subnet(complete_address="192.168.1.0/24")
+    b = Subnet(complete_address="192.168.1.16/29")
 
-    def test_regular_networks_work(self):
-        result = self.a - self.b
-        expected = [
-            Subnet(complete_address="192.168.1.24/29"),
-            Subnet(complete_address="192.168.1.0/28"),
-            Subnet(complete_address="192.168.1.32/27"),
-            Subnet(complete_address="192.168.1.64/26"),
-            Subnet(complete_address="192.168.1.128/25")
-        ]
-
-        self.assertEqual(5, len(result))
-        self.assertEqual(expected, result)
-
-    def test_subtracting_self_returns_empty(self):
-        result = self.a - self.a
-
-        self.assertEqual(0, len(result))
-
-    def test_subtracting_outside_raises_error(self):
-        with self.assertRaises(ValueError):
-            self.b - self.a
+    print(a)
+    print(b)
+    print(a - b)

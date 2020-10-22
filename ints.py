@@ -13,6 +13,22 @@ class GreedyInt:
 
         raise ValueError("I don't know how to subtract this")
 
+    def __add__(self, other):
+        if isinstance(other, self.__class__):
+            return GreedyInt(self.i + other.i)
+        elif isinstance(other, int):
+            return GreedyInt(self.i + other)
+
+        raise ValueError("I don't know how to add this")
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.i == other.i
+        elif isinstance(other, int):
+            return self.i == other
+
+        raise ValueError("I don't know how to equate this")
+
     def __str__(self):
         return str(self.i)
 
